@@ -18,6 +18,7 @@ import {
   Stack,
   AspectRatio,
   StatGroup,
+  Tooltip
 } from "@chakra-ui/react";
 
 import { useSpaceXQuery } from "../utils/use-space-x";
@@ -129,7 +130,9 @@ function TimeAndLocation({ launch }) {
           </Box>
         </StatLabel>
         <StatNumber fontSize={["md", "xl"]}>
-          {formatDateTime(launch.date_local)}
+        <Tooltip label={formatDateTime(launch.date_local)}>
+          {formatDateTime(launch.date_local, launch.launchpad.timezone)}
+        </Tooltip>
         </StatNumber>
         <StatHelpText>{timeAgo(launch.date_utc)}</StatHelpText>
       </Stat>
