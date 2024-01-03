@@ -59,7 +59,7 @@ function LaunchPadItem({ launchPad }) {
       position="relative"
     >
       <Box p="6">
-        <Flex gap="6" alignItems="center" justifyContent="space-between">
+        <Flex gap="1" alignItems="center" justifyContent="space-between">
           <Box minW="0">
             <Box d="flex" alignItems="baseline">
               {launchPad.status === "active" ? (
