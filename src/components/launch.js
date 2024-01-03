@@ -25,6 +25,8 @@ import { useSpaceXQuery } from "../utils/use-space-x";
 import { formatDateTime } from "../utils/format-date";
 import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
+import FavoriteButton from "./favorite-button";
+import { FAVORITES_TYPES } from "../contexts/FavoritesContext";
 
 const numberFormatter = new Intl.NumberFormat();
 
@@ -90,17 +92,20 @@ function Header({ launch }) {
         objectFit="contain"
         objectPosition="bottom"
       />
-      <Heading
-        color="white"
-        display="inline"
-        backgroundColor="#718096b8"
-        fontSize={["lg", "5xl"]}
-        px="4"
-        py="2"
-        borderRadius="lg"
-      >
-        {launch.name}
-      </Heading>
+      <Flex alignItems="center">
+        <Heading
+          color="white"
+          display="inline"
+          backgroundColor="#718096b8"
+          fontSize={["lg", "5xl"]}
+          px="4"
+          py="2"
+          borderRadius="lg"
+        >
+          {launch.name}
+        </Heading>
+        <FavoriteButton type={FAVORITES_TYPES.LAUNCHES} id={launch.id} width="1.5em" />
+      </Flex>
       <Stack isInline spacing="3">
         <Badge colorScheme="purple" fontSize={["xs", "md"]}>
           #{launch.flight_number}
