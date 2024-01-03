@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Flex, Text } from "@chakra-ui/react";
 
+import { FavoritesProvider } from "../contexts/FavoritesContext";
 import Launches from "./launches";
 import Launch from "./launch";
 import Home from "./home";
@@ -10,14 +11,16 @@ import LaunchPad from "./launch-pad";
 export default function App() {
   return (
     <div>
-      <NavBar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/launches" element={<Launches />} />
-        <Route path="/launches/:launchId" element={<Launch />} />
-        <Route path="/launch-pads" element={<LaunchPads />} />
-        <Route path="/launch-pads/:launchPadId" element={<LaunchPad />} />
-      </Routes>
+      <FavoritesProvider>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/launches" element={<Launches />} />
+          <Route path="/launches/:launchId" element={<Launch />} />
+          <Route path="/launch-pads" element={<LaunchPads />} />
+          <Route path="/launch-pads/:launchPadId" element={<LaunchPad />} />
+        </Routes>
+      </FavoritesProvider>
     </div>
   );
 }
