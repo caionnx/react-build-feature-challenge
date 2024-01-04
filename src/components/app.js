@@ -7,7 +7,7 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 
-import { FavoritesProvider } from "../contexts/FavoritesContext";
+import { FavoritesProvider } from "../contexts/favorites-context";
 import Launches from "./launches";
 import Launch from "./launch";
 import Home from "./home";

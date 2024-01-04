@@ -26,7 +26,7 @@ import { formatDateTime } from "../utils/format-date";
 import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
 import FavoriteButton from "./favorite-button";
-import { FAVORITES_TYPES } from "../contexts/FavoritesContext";
+import { FAVORITES_TYPES } from "../contexts/favorites-context";
 
 const numberFormatter = new Intl.NumberFormat();
 

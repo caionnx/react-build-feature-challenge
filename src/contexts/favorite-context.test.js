@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { FavoritesProvider, useFavoritesContext, FAVORITES_TYPES, LOCAL_STORAGE_KEY, defaultFavoritesContextValue } from './FavoritesContext';
+import { FavoritesProvider, useFavoritesContext, FAVORITES_TYPES, LOCAL_STORAGE_KEY } from './favorites-context';
 
 const originalConsoleError = console.error;
 

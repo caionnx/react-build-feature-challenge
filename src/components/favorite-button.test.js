@@ -2,9 +2,9 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import FavoriteButton from './favorite-button';
-import { useFavoritesContext } from '../contexts/FavoritesContext';
+import { useFavoritesContext } from '../contexts/favorites-context';
 
-jest.mock('../contexts/FavoritesContext', () => ({
+jest.mock('../contexts/favorites-context', () => ({
   useFavoritesContext: jest.fn()
 }));
 

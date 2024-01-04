@@ -18,7 +18,7 @@ import { Drawer,
 import { format as timeAgo } from "timeago.js";
 import { Link } from "react-router-dom";
 
-import { FAVORITES_TYPES, useFavoritesContext } from "../contexts/FavoritesContext";
+import { FAVORITES_TYPES, useFavoritesContext } from "../contexts/favorites-context";
 import { useSpaceXQuery } from "../utils/use-space-x";
 import Error from "./error";
 

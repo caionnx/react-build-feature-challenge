@@ -4,11 +4,11 @@ import { BrowserRouter } from 'react-router-dom'
 import '@testing-library/jest-dom';
 
 import FavoriteDrawer from './favorite-drawer';
-import { useFavoritesContext } from '../contexts/FavoritesContext';
+import { useFavoritesContext } from '../contexts/favorites-context';
 import { useSpaceXQuery } from '../utils/use-space-x';
 
-jest.mock('../contexts/FavoritesContext', () => ({
-	...jest.requireActual('../contexts/FavoritesContext'),
+jest.mock('../contexts/favorites-context', () => ({
+	...jest.requireActual('../contexts/favorites-context'),
   useFavoritesContext: jest.fn()
 }));
 

@@ -1,6 +1,6 @@
 import { Star } from "react-feather";
 import { Button } from "@chakra-ui/react";
-import { useFavoritesContext } from "../contexts/FavoritesContext";
+import { useFavoritesContext } from "../contexts/favorites-context";
 import { useMemo, useCallback } from "react";
 
 export default function FavoriteButton({ type, id, width = '1.2em' }) {

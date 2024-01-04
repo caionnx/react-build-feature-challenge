@@ -8,7 +8,7 @@ import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
 import LoadMoreButton from "./load-more-button";
 import FavoriteButton from "./favorite-button";
-import { FAVORITES_TYPES } from "../contexts/FavoritesContext";
+import { FAVORITES_TYPES } from "../contexts/favorites-context";
 
 const PAGE_SIZE = 12;
 

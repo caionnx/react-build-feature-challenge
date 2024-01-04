@@ -21,7 +21,7 @@ import Error from "./error";
 import Breadcrumbs from "./breadcrumbs";
 import { LaunchItem } from "./launches";
 import FavoriteButton from "./favorite-button";
-import { FAVORITES_TYPES } from "../contexts/FavoritesContext";
+import { FAVORITES_TYPES } from "../contexts/favorites-context";
 
 export default function LaunchPad() {
   let { launchPadId } = useParams();

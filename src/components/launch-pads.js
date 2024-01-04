@@ -6,7 +6,7 @@ import Breadcrumbs from "./breadcrumbs";
 import LoadMoreButton from "./load-more-button";
 import { useSpaceXPaginatedQuery } from "../utils/use-space-x";
 import FavoriteButton from "./favorite-button";
-import { FAVORITES_TYPES } from "../contexts/FavoritesContext";
+import { FAVORITES_TYPES } from "../contexts/favorites-context";
 
 const PAGE_SIZE = 12;
 
