@@ -21,7 +21,8 @@ describe('FavoriteDrawer', () => {
     useFavoritesContext.mockReturnValue({
       favoriteItems: {
         launches: [],
-        pads: []
+        pads: [],
+        rockets: [],
       }
     });
 
@@ -40,7 +41,8 @@ describe('FavoriteDrawer', () => {
     useFavoritesContext.mockReturnValue({
       favoriteItems: {
         launches: ['123'],
-        pads: ['456']
+        pads: ['456'],
+        rockets: [],
       }
     });
 
@@ -71,7 +73,8 @@ describe('FavoriteDrawer', () => {
     useFavoritesContext.mockReturnValue({
       favoriteItems: {
         launches: ['123'],
-        pads: []
+        pads: [],
+        rockets: []
       }
     });
 
