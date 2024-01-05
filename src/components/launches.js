@@ -1,4 +1,4 @@
-import { Badge, Box, Image, SimpleGrid, Text, Flex } from "@chakra-ui/react";
+import { Badge, Box, Image, SimpleGrid, Text, Flex, Input } from "@chakra-ui/react";
 import { format as timeAgo } from "timeago.js";
 import { Link } from "react-router-dom";
 
@@ -9,14 +9,22 @@ import Breadcrumbs from "./breadcrumbs";
 import LoadMoreButton from "./load-more-button";
 import FavoriteButton from "./favorite-button";
 import { FAVORITES_TYPES } from "../contexts/favorites-context";
+import useDebouncedValue from "../utils/use-debounced-value";
 
 const PAGE_SIZE = 12;
 
 export default function Launches() {
+  const [searchTerm, setSearchTerm, querySearchTerm] = useDebouncedValue("");
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
+  const query = querySearchTerm ? { upcoming: false, name: { $regex: querySearchTerm, $options: 'i' }} : { upcoming: false };
   const { data, error, isValidating, setSize } = useSpaceXPaginatedQuery(
     "launches",
     {
-      query: { upcoming: false },
+      query,
       options: {
         limit: PAGE_SIZE,
         populate: ["rocket", "launchpad"],
@@ -25,19 +33,31 @@ export default function Launches() {
     }
   );
 
+  const launches = data?.map((page) => page.docs).flat();
+
   return (
     <div>
       <Breadcrumbs
         items={[{ label: "Home", to: "/" }, { label: "Launches" }]}
       />
+      {
+        !error && <Box mx="6" mb="8">
+          <Input
+            value={searchTerm}
+            onChange={handleSearchChange}
+            placeholder="Search launches"
+          />
+        </Box>
+      }
       <SimpleGrid m={[2, null, 6]} minChildWidth="350px" spacing="4">
         {error && <Error />}
-        {data
-          ?.map((page) => page.docs)
-          .flat()
-          .map((launch) => (
+        {launches && !launches?.length && querySearchTerm && <Box textAlign="center">
+          No results found for `{querySearchTerm}`. Try a different search term.
+        </Box>
+        }
+        {launches?.map((launch) => (
             <LaunchItem launch={launch} key={launch.id} />
-          ))}
+        ))}
       </SimpleGrid>
       <LoadMoreButton
         loadMore={() => setSize((size) => size + 1)}
