@@ -1,6 +1,5 @@
-import { useParams, Link as RouterLink } from "react-router-dom";
-import { format as timeAgo } from "timeago.js";
-import { Watch, MapPin, Navigation, Package, Maximize2 } from "react-feather";
+import { useParams } from "react-router-dom";
+import { Watch, Cpu, Loader, Circle, Package, Maximize2 } from "react-feather";
 import {
   Flex,
   Heading,
@@ -14,11 +13,8 @@ import {
   Text,
   Spinner,
   Image,
-  Link,
   Stack,
-  AspectRatio,
   StatGroup,
-  Tooltip
 } from "@chakra-ui/react";
 
 import { useSpaceXQuery } from "../utils/use-space-x";
@@ -30,16 +26,15 @@ import { FAVORITES_TYPES } from "../contexts/favorites-context";
 
 const numberFormatter = new Intl.NumberFormat();
 
-export default function Launch() {
-  let { launchId } = useParams();
-  const { data, error } = useSpaceXQuery("launches", {
-    query: { _id: launchId },
-    options: { populate: ["rocket", "launchpad"] },
+export default function Rocket() {
+  let { rocketId } = useParams();
+  const { data, error } = useSpaceXQuery("rockets", {
+    query: { _id: rocketId },
   });
-  const launch = data?.docs[0];
+  const rocket = data?.docs[0];
 
   if (error) return <Error />;
-  if (!launch) {
+  if (!rocket) {
     return (
       <Flex justifyContent="center" alignItems="center" minHeight="50vh">
         <Spinner size="lg" />
@@ -52,47 +47,32 @@ export default function Launch() {
       <Breadcrumbs
         items={[
           { label: "Home", to: "/" },
-          { label: "Launches", to: "/launches" },
-          { label: `#${launch.flight_number}` },
+          { label: "Rockets", to: "/rockets" },
+          { label: `#${rocket.name}` },
         ]}
       />
-      <Header launch={launch} />
+      <Header rocket={rocket} />
       <Box m={[3, 6]}>
-        <TimeAndLocation launch={launch} />
-        <RocketInfo launch={launch} />
-        <Text color="gray.700" fontSize={["md", null, "lg"]} my="8">
-          {launch.details}
+        <Text color="gray.700" fontSize={["md", null, "lg"]} mb="8">
+          {rocket.description}
         </Text>
-        <Video launch={launch} />
-        <Gallery images={launch.links.flickr.original} />
+        <TimeAndLocation rocket={rocket} />
+        <RocketInfo rocket={rocket} />
+        <Gallery images={rocket.flickr_images} />
       </Box>
     </div>
   );
 }
 
-function Header({ launch }) {
+function Header({ rocket }) {
   return (
     <Flex
-      bgImage={`url(${launch.links.flickr.original[0]})`}
-      bgPos="center"
-      bgSize="cover"
-      bgRepeat="no-repeat"
-      minHeight="30vh"
+      minHeight="12vh"
       position="relative"
       p={[2, 6]}
-      alignItems="flex-end"
-      justifyContent="space-between"
+      flexDirection={'column'}
     >
-      <Image
-        position="absolute"
-        top="5"
-        right="5"
-        src={launch.links.patch.small}
-        height={["85px", "150px"]}
-        objectFit="contain"
-        objectPosition="bottom"
-      />
-      <Flex alignItems="center">
+      <Flex alignItems="center" mb="8">
         <Heading
           color="white"
           display="inline"
@@ -102,21 +82,21 @@ function Header({ launch }) {
           py="2"
           borderRadius="lg"
         >
-          {launch.name}
+          {rocket.name}
         </Heading>
-        <FavoriteButton type={FAVORITES_TYPES.LAUNCHES} id={launch.id} width="1.5em" />
+        <FavoriteButton type={FAVORITES_TYPES.ROCKETS} id={rocket.id} width="1.5em" />
       </Flex>
       <Stack isInline spacing="3">
         <Badge colorScheme="purple" fontSize={["xs", "md"]}>
-          #{launch.flight_number}
+          {rocket.success_rate_pct}% sucess rate
         </Badge>
-        {launch.success ? (
+        {rocket.active ? (
           <Badge colorScheme="green" fontSize={["xs", "md"]}>
-            Successful
+            Active
           </Badge>
         ) : (
           <Badge colorScheme="red" fontSize={["xs", "md"]}>
-            Failed
+            Retired
           </Badge>
         )}
       </Stack>
@@ -124,42 +104,36 @@ function Header({ launch }) {
   );
 }
 
-function TimeAndLocation({ launch }) {
+function TimeAndLocation({ rocket }) {
   return (
     <SimpleGrid columns={[1, 1, 2]} borderWidth="1px" p="4" borderRadius="md">
       <Stat>
         <StatLabel display="flex">
           <Box as={Watch} width="1em" />{" "}
           <Box ml="2" as="span">
-            Launch Date
+            First flight
           </Box>
         </StatLabel>
         <StatNumber fontSize={["md", "xl"]}>
-        <Tooltip label={formatDateTime(launch.date_local)}>
-          {formatDateTime(launch.date_local, launch.launchpad.timezone)}
-        </Tooltip>
+          {formatDateTime(rocket.first_flight)}
         </StatNumber>
-        <StatHelpText>{timeAgo(launch.date_utc)}</StatHelpText>
       </Stat>
       <Stat>
         <StatLabel display="flex">
-          <Box as={MapPin} width="1em" />{" "}
+          <Box as={Cpu} width="1em" />{" "}
           <Box ml="2" as="span">
-            Launch Site
+            Engines layout/type
           </Box>
         </StatLabel>
         <StatNumber fontSize={["md", "xl"]}>
-          <Link as={RouterLink} to={`/launch-pads/${launch.launchpad.id}`}>
-            {launch.launchpad.full_name}
-          </Link>
+          {rocket.engines.layout}/{rocket.engines.type}
         </StatNumber>
-        <StatHelpText>{launch.launchpad.name}</StatHelpText>
       </Stat>
     </SimpleGrid>
   );
 }
 
-function RocketInfo({ launch }) {
+function RocketInfo({ rocket }) {
   return (
     <SimpleGrid
       columns={[1, 1, 2]}
@@ -168,22 +142,6 @@ function RocketInfo({ launch }) {
       p="4"
       borderRadius="md"
     >
-      <Stat>
-        <StatLabel display="flex">
-          <Box as={Navigation} width="1em" />{" "}
-          <Box ml="2" as="span">
-            Rocket
-          </Box>
-        </StatLabel>
-        <StatNumber fontSize={["md", "xl"]}>
-          <Link as={RouterLink} to={`/rockets/${launch.rocket.id}`}>
-            {launch.rocket.name}
-          </Link>
-        </StatNumber>
-        <StatHelpText>
-          {launch.rocket.success_rate_pct}% success rate
-        </StatHelpText>
-      </Stat>
       <StatGroup>
         <Stat>
           <StatLabel display="flex">
@@ -193,10 +151,10 @@ function RocketInfo({ launch }) {
             </Box>
           </StatLabel>
           <StatNumber fontSize={["md", "xl"]}>
-            {numberFormatter.format(launch.rocket.height.meters)} m
+            {numberFormatter.format(rocket.height.meters)} m
           </StatNumber>
           <StatHelpText>
-            {numberFormatter.format(launch.rocket.height.feet)} ft
+            {numberFormatter.format(rocket.height.feet)} ft
           </StatHelpText>
         </Stat>
         <Stat>
@@ -207,27 +165,44 @@ function RocketInfo({ launch }) {
             </Box>
           </StatLabel>
           <StatNumber fontSize={["md", "xl"]}>
-            {numberFormatter.format(launch.rocket.mass.kg)} kg
+            {numberFormatter.format(rocket.mass.kg)} kg
           </StatNumber>
           <StatHelpText>
-            {numberFormatter.format(launch.rocket.mass.lb)} lb.
+            {numberFormatter.format(rocket.mass.lb)} lb.
+          </StatHelpText>
+        </Stat>   
+      </StatGroup>
+      <StatGroup>
+      <Stat>
+          <StatLabel display="flex">
+            <Box as={Circle} width="1em" />{" "}
+            <Box ml="2" as="span">
+              Diameter
+            </Box>
+          </StatLabel>
+          <StatNumber fontSize={["md", "xl"]}>
+            {numberFormatter.format(rocket.diameter.meters)} m
+          </StatNumber>
+          <StatHelpText>
+            {numberFormatter.format(rocket.diameter.feet)} ft
+          </StatHelpText>
+        </Stat>
+        <Stat>
+          <StatLabel display="flex">
+            <Box as={Loader} width="1em" />{" "}
+            <Box ml="2" as="span">
+              Landing legs
+            </Box>
+          </StatLabel>
+          <StatNumber fontSize={["md", "xl"]}>
+            {rocket.landing_legs.number}
+          </StatNumber>
+          <StatHelpText>
+            {rocket.landing_legs.material}
           </StatHelpText>
         </Stat>
       </StatGroup>
     </SimpleGrid>
-  );
-}
-
-function Video({ launch }) {
-  return (
-    <AspectRatio maxH="400px" ratio={1.7}>
-      <Box
-        as="iframe"
-        title={launch.name}
-        src={`https://www.youtube.com/embed/${launch.links.youtube_id}`}
-        allowFullScreen
-      />
-    </AspectRatio>
   );
 }
 

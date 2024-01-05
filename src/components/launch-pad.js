@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import { MapPin, Navigation } from "react-feather";
 import {
   Flex,
@@ -14,6 +14,7 @@ import {
   Spinner,
   Stack,
   AspectRatio,
+  Link,
 } from "@chakra-ui/react";
 
 import { useSpaceXQuery } from "../utils/use-space-x";
@@ -138,7 +139,11 @@ function LocationAndVehicles({ launchPad }) {
           </Box>
         </StatLabel>
         <StatNumber fontSize="xl">
-          {launchPad.rockets.map((r) => r.name).join(", ")}
+          {launchPad.rockets.map((r) => <Box>
+            <Link as={RouterLink} to={`/rockets/${r.id}`}>
+              {r.name}
+            </Link>
+          </Box>)}
         </StatNumber>
       </Stat>
     </SimpleGrid>
