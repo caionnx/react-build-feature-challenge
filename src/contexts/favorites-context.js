@@ -4,13 +4,15 @@ export const LOCAL_STORAGE_KEY = 'space_rockets_favorites';
 
 export const FAVORITES_TYPES = {
   LAUNCHES: 'launches',
-  PADS: 'pads'
+  PADS: 'pads',
+  ROCKETS: 'rockets',
 };
 
 export const defaultFavoritesContextValue = {
   favoriteItems: {
     [FAVORITES_TYPES.LAUNCHES]: [],
     [FAVORITES_TYPES.PADS]: [],
+    [FAVORITES_TYPES.ROCKETS]: [],
   },
   addFavoriteItem: () => null,
   removeFavoriteItem: () => null,

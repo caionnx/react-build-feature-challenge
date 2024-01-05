@@ -7,6 +7,7 @@ export default function Home() {
     <Stack m="6" spacing="6">
       <PageLink url="/launches">Browse SpaceX Launches</PageLink>
       <PageLink url="/launch-pads">Browse SpaceX Launch Pads</PageLink>
+      <PageLink url="/rockets">Browse SpaceX Rockets</PageLink>
     </Stack>
   );
 }

@@ -106,6 +106,7 @@ describe('FavoritesProvider', () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
       [FAVORITES_TYPES.LAUNCHES]: ['123'],
       [FAVORITES_TYPES.PADS]: ['456'],
+      [FAVORITES_TYPES.ROCKETS]: [''],
     }));
     
     const TestComponent = () => {

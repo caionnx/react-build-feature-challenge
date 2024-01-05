@@ -13,6 +13,7 @@ import Launch from "./launch";
 import Home from "./home";
 import LaunchPads from "./launch-pads";
 import LaunchPad from "./launch-pad";
+import Rockets from "./rockets";
 import FavoriteDrawer from "./favorite-drawer";
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
           <Route path="/launches/:launchId" element={<Launch />} />
           <Route path="/launch-pads" element={<LaunchPads />} />
           <Route path="/launch-pads/:launchPadId" element={<LaunchPad />} />
+          <Route path="/rockets" element={<Rockets />} />
         </Routes>
       </FavoritesProvider>
     </div>
