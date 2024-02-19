@@ -1,6 +1,7 @@
 # ¡Space·Rockets! app
 
 ### [👉 Go to the challenge 👈](./CHALLENGE.md)
+### [❗👉 Go to the challenge resolutions 👈❗](./CHALLENGE-RESOLUTIONS.md)
 
 ### [🚀 See the app in action 🚀](https://taupe-pudding-552de0.netlify.app/) (Final Version with the changes in place)
 
